@@ -22,9 +22,8 @@ export default function WalletSearchPanel({
   onSearch: (p: SearchParams) => void;
 }) {
   const [address, setAddress] = useState(initialAddress);
-  const [preset, setPreset] = useState<"24h" | "7d" | "30d" | "custom">("24h");
-
-  const { from: defFrom, to: defTo } = msRangePreset("24h");
+  const [preset, setPreset] = useState<"24h" | "7d" | "30d" | "custom">("7d");
+  const { from: defFrom, to: defTo } = msRangePreset("7d");
   const [start, setStart] = useState(toInputDateTime(defFrom));
   const [end, setEnd] = useState(toInputDateTime(defTo));
 
@@ -37,64 +36,39 @@ export default function WalletSearchPanel({
   }, [preset]);
 
   function handleSearch() {
-    const addr = extractAddress(address.trim());
+    const addr = extractAddress(address.trim()).toLowerCase();
     const from = preset === "custom" ? fromInputDateTime(start) : msRangePreset(preset).from;
     const to = preset === "custom" ? fromInputDateTime(end) : msRangePreset(preset).to;
     onSearch({ address: addr, from, to });
   }
 
   return (
-    <div className="card p-5">
-      <div className="flex flex-wrap items-end gap-4">
-        <div className="flex-1 min-w-[280px]">
-          <label className="block text-sm text-zen-sub mb-1">Wallet address</label>
-          <input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="0x... or paste a line like 'user,0xabc...'"
-            className="w-full bg-black/30 border border-white/10 rounded-xl px-3 py-2 outline-none focus:border-zen-accent"
-          />
-        </div>
-        <div>
-          <label className="block text-sm text-zen-sub mb-1">Range</label>
-          <select
-            value={preset}
-            onChange={(e) => setPreset(e.target.value as any)}
-            className="bg-black/30 border border-white/10 rounded-xl px-3 py-2 outline-none focus:border-zen-accent"
-          >
-            <option value="24h">Last 24 hours</option>
-            <option value="7d">Last 7 days</option>
-            <option value="30d">Last 30 days</option>
-            <option value="custom">Custom…</option>
-          </select>
-        </div>
-        {preset === "custom" && (
-          <>
-            <div>
-              <label className="block text-sm text-zen-sub mb-1">Start</label>
-              <input
-                type="datetime-local"
-                value={start}
-                onChange={(e) => setStart(e.target.value)}
-                className="bg-black/30 border border-white/10 rounded-xl px-3 py-2 outline-none focus:border-zen-accent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-zen-sub mb-1">End</label>
-              <input
-                type="datetime-local"
-                value={end}
-                onChange={(e) => setEnd(e.target.value)}
-                className="bg-black/30 border border-white/10 rounded-xl px-3 py-2 outline-none focus:border-zen-accent"
-              />
-            </div>
-          </>
-        )}
-        <button onClick={handleSearch} className="btn h-[42px]">Check Stats</button>
-      </div>
-      <div className="text-xs text-zen-sub mt-2">
-        You can paste a full line like "discord,0xabc..." or an Explorer URL — we’ll extract the address automatically.
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-2">
+      <input
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder="0x... (or paste 'user,0x...' / explorer URL)"
+        className="w-full bg-black/30 border border-white/10 rounded-md px-3 py-2 text-sm outline-none focus:border-zen-accent"
+      />
+      <select
+        value={preset}
+        onChange={(e) => setPreset(e.target.value as any)}
+        className="bg-black/30 border border-white/10 rounded-md px-2 py-2 text-sm outline-none focus:border-zen-accent"
+      >
+        <option value="24h">Last 24h</option>
+        <option value="7d">Last 7 days</option>
+        <option value="30d">Last 30 days</option>
+        <option value="custom">Custom…</option>
+      </select>
+      {preset === "custom" ? (
+        <>
+          <input type="datetime-local" value={start} onChange={(e)=>setStart(e.target.value)} className="bg-black/30 border border-white/10 rounded-md px-2 py-2 text-sm outline-none focus:border-zen-accent"/>
+          <input type="datetime-local" value={end} onChange={(e)=>setEnd(e.target.value)} className="bg-black/30 border border-white/10 rounded-md px-2 py-2 text-sm outline-none focus:border-zen-accent"/>
+        </>
+      ) : (
+        <button onClick={handleSearch} className="btn text-sm h-[38px]">Check</button>
+      )}
+      {preset === "custom" && <button onClick={handleSearch} className="btn text-sm h-[38px] md:col-start-4">Check</button>}
     </div>
   );
 }

@@ -15,11 +15,11 @@ export interface TxBasic {
   gasPrice?: string;
   feeWei?: string;
   methodId?: string;
-  contractAddress?: string | null; // for creations (rest v2)
+  contractAddress?: string | null; // for creations (rest v2 / rpc)
 }
 
 export interface TxLog {
-  address: string; // contract emitting
+  address: string;
   topics: string[];
   data: string;
 }
@@ -58,10 +58,11 @@ export interface AddressStats {
   };
   countsByCategoryOut: Record<string, number>;
   transactions: TxEnriched[];
-  source: "compat" | "restv2" | "mixed";
+  source: "compat" | "restv2" | "mixed" | "rpc";
   debug?: {
-    compatTried: boolean;
-    restTried: boolean;
+    compatTried?: boolean;
+    restTried?: boolean;
+    rpcUsed?: boolean;
     pagesFetched?: number;
     warnings?: string[];
   };

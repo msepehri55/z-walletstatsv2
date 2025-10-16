@@ -2,23 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
+:root { color-scheme: dark; }
 
-html, body, #__next {
-  height: 100%;
-}
+html, body, #__next { height: 100%; }
 
 body {
   @apply bg-zen-bg text-zen-text;
-  font-feature-settings: "ss01" on, "cv01" on;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.card {
-  @apply bg-zen-panel rounded-2xl shadow-card border border-white/5;
-}
+.card { @apply bg-zen-panel rounded-xl shadow-card border border-white/5; }
+.btn  { @apply rounded-md px-4 py-2 font-medium bg-zen-accent text-black hover:brightness-110 transition; }
 
-.btn {
-  @apply rounded-xl px-4 py-2 font-medium bg-zen-accent text-black hover:brightness-110 transition;
-}
+table { font-size: 12px; }
+td, th { padding-top: 6px; padding-bottom: 6px; }

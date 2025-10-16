@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root { color-scheme: dark; }
-
 html, body, #__next { height: 100%; }
 
 body {
@@ -12,8 +11,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.card { @apply bg-zen-panel rounded-xl shadow-card border border-white/5; }
-.btn  { @apply rounded-md px-4 py-2 font-medium bg-zen-accent text-black hover:brightness-110 transition; }
+/* Premium glass cards + shadows */
+.card { @apply bg-zen-panel/80 rounded-3xl shadow-card border border-white/5 backdrop-blur-md; }
+.btn  { @apply rounded-lg px-4 py-2 font-medium bg-zen-accent text-black hover:brightness-110 transition; }
 
-table { font-size: 12px; }
-td, th { padding-top: 6px; padding-bottom: 6px; }
+/* Table: dense but elegant */
+table { font-size: 12.5px; }
+td, th { padding-top: 8px; padding-bottom: 8px; }
+thead { @apply bg-zen-panel/80 backdrop-blur; }
+
+/* Accent rings on focus */
+input, select {
+  @apply outline-none;
+}
+input:focus, select:focus {
+  box-shadow: 0 0 0 3px rgba(33, 225, 168, 0.25);
+  border-color: rgba(33, 225, 168, 0.8) !important;
+}

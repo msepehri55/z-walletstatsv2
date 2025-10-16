@@ -48,12 +48,12 @@ export default function WalletSearchPanel({
         value={address}
         onChange={(e) => setAddress(e.target.value)}
         placeholder="0x... (or paste 'user,0x...' / explorer URL)"
-        className="w-full bg-black/30 border border-white/10 rounded-md px-3 py-2 text-sm outline-none focus:border-zen-accent"
+        className="w-full bg-[#0c1628] border border-white/10 text-white rounded-md px-3 py-3 text-sm outline-none"
       />
       <select
         value={preset}
         onChange={(e) => setPreset(e.target.value as any)}
-        className="bg-black/30 border border-white/10 rounded-md px-2 py-2 text-sm outline-none focus:border-zen-accent"
+        className="bg-[#0c1628] border border-white/10 text-white rounded-md px-3 py-3 text-sm outline-none"
       >
         <option value="24h">Last 24h</option>
         <option value="7d">Last 7 days</option>
@@ -62,13 +62,13 @@ export default function WalletSearchPanel({
       </select>
       {preset === "custom" ? (
         <>
-          <input type="datetime-local" value={start} onChange={(e)=>setStart(e.target.value)} className="bg-black/30 border border-white/10 rounded-md px-2 py-2 text-sm outline-none focus:border-zen-accent"/>
-          <input type="datetime-local" value={end} onChange={(e)=>setEnd(e.target.value)} className="bg-black/30 border border-white/10 rounded-md px-2 py-2 text-sm outline-none focus:border-zen-accent"/>
+          <input type="datetime-local" value={start} onChange={(e)=>setStart(e.target.value)} className="bg-[#0c1628] border border-white/10 text-white rounded-md px-3 py-3 text-sm outline-none"/>
+          <input type="datetime-local" value={end} onChange={(e)=>setEnd(e.target.value)} className="bg-[#0c1628] border border-white/10 text-white rounded-md px-3 py-3 text-sm outline-none"/>
         </>
       ) : (
-        <button onClick={handleSearch} className="btn text-sm h-[38px]">Check</button>
+        <button onClick={handleSearch} className="rounded-md px-4 py-3 font-medium bg-zen-accent text-black hover:brightness-110 transition text-sm">Check</button>
       )}
-      {preset === "custom" && <button onClick={handleSearch} className="btn text-sm h-[38px] md:col-start-4">Check</button>}
+      {preset === "custom" && <button onClick={handleSearch} className="rounded-md px-4 py-3 font-medium bg-zen-accent text-black hover:brightness-110 transition text-sm md:col-start-4">Check</button>}
     </div>
   );
 }
